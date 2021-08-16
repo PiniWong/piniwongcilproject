@@ -1,0 +1,11 @@
+{
+    msg:'moc角色列表接口模拟数据',
+    'roleList|4-8':[
+        {
+            Rkey:"@id()",
+            Rname:"@cname()",
+            Rmsg:"@csentence(3, 5)",
+            
+        }
+    ]
+}

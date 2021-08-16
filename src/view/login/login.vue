@@ -1,0 +1,110 @@
+<template>
+  <div class="login">
+    <div class="loginBox">
+      <a-form :form="form" class="aForm" :label-col="{ span: 7 }" :wrapper-col="{ span: 12 }" @submit="sumbitPlay">
+        <h2>
+          登录
+        </h2>
+        <a-form-item label="账号" has-feedback  >
+          <a-input v-decorator='RulesInput.account'  class="accountInput"
+          placeholder="请输入您的账号"/>
+        </a-form-item>  
+        <a-form-item label="密码" has-feedback  >
+          <a-input-password  v-decorator='RulesInput.password' placeholder="请输入您的密码" />
+        </a-form-item>
+        <a-form-item :wrapper-col="{ span: 12, offset: 6 }" >
+          <div class="a-form-button">
+            <a-button html-type="submit" type="primary">登录</a-button>
+            <a-button type="register">注册</a-button>
+          </div>
+        </a-form-item>
+      </a-form>
+    </div>
+  </div>
+</template>
+
+<script>
+// import { set } from 'vue/types/umd';
+const RulesInput={
+  account:['account',{rules:[{required:true,message:'请输入你的账号'}]}],
+  password:['password',{rules:[{required:true,message:'请输入你的密码'}]}],
+}
+export default {
+  data() {
+    return {
+      formLayout: 'horizontal',
+      RulesInput,
+      form: this.$form.createForm(this, { name: 'coordinated' }),
+      account:'huangzhibin',
+      password:'123456789'
+    };
+  },
+  methods: {
+    sumbitPlay(e){
+      e.preventDefault();
+      this.form.validateFields((err,value)=>{
+        if(!err){
+          if(value.account==this.account&&value.password==this.password){
+               this.$message
+        .loading(()=>{
+          this.$http.post('/login/go',
+            {
+                name:value.account
+            }
+          ).then(res=>{
+            //存储token
+            const token = res.data.token
+            window.sessionStorage.setItem('token',token)
+            //存储name
+            const adminName = res.data.adminName
+            window.sessionStorage.setItem('adminName',adminName)
+
+            console.log(res)
+          }).catch(err=>{
+            console.log(err)
+
+          })
+        }, 0.5)
+        .then(() => this.$message.success('登录成功', 1))
+        .then(()=>this.$router.push('/home'))
+          }else{
+              this.$message.error('账号密码错误');
+          }
+        }
+      })
+
+    }
+  },
+};
+</script>
+<style lang="less" scoped>
+  .login{
+    width: 100vw;
+    height: 100vh;
+    float: left;
+    background-color: #001529;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+
+  .loginBox{
+    width: 40em;
+    height: 30em;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .aForm{
+      width: 90%;
+      h2{
+        font-size: 60px;
+        text-align: center;
+      }
+      .a-form-button{
+        display: flex;
+        justify-content: space-around;
+      }
+    }
+  }
+</style>
