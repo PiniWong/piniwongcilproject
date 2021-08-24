@@ -12,6 +12,7 @@
       </a-breadcrumb-item>
       <a-breadcrumb-item>
         商品权限
+        123123
       </a-breadcrumb-item>
     </a-breadcrumb>
   </div>
