@@ -7,9 +7,9 @@ import Vue2OrgTree from 'vue2-org-tree'
 import 'vue2-org-tree/dist/style.css'
 
 
-import axios from 'axios'
+// import axios from 'axios'
 
-Vue.prototype.$http = axios
+// Vue.prototype.$http = axios
 Vue.use(router)
 Vue.use(Vue2OrgTree)
 Vue.config.productionTip = false

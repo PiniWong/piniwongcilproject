@@ -33,7 +33,7 @@
         </a-menu>
       </div>
     </a-layout-sider>
-    <a-layout :style="{ marginLeft: '200px' }">
+     <a-layout :style="{ marginLeft: '200px' }">
       <a-layout-header style="background: #fff; padding: 0">
         <a-icon
           class="trigger"
@@ -92,22 +92,23 @@
       </a-layout-content>
     </a-layout>
   </a-layout>
+  
 </template>
 <script>
 export default {
   name: "home",
   data() {
     return {
-      adminNmae: "",
+      adminNmae:null,
       
       collapsed: false,
       navBar: [
         {
-          name: "用户管理",
+          name: "支付管理",
           type: "user",
           chil: [
             {
-              cname: "用户列表",
+              cname: "支付记录列表",
               path: "userList",
             },
           ],
@@ -161,27 +162,11 @@ export default {
 
   },
   created() {
+    
     this.adminName = sessionStorage.getItem("adminName");
     this.$router.replace({ path: "/home" });
 
-    //公告请求
-    this.$http
-      .get("https://kbapi.dianlan8.com:7804/kbapi/rest/kbwxgetannouncement", {
-        params: {
-          timestamp: this.getTimestamo(),
-          sig: "8D5A815A0D79A3F0C2CCB556FFB08B27",
-          sns: "goSALE",
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        const noticeList = res.data.data[0].data;
-        // console.log(noticeList)
-        this.noticeList = noticeList;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+
   },
   destroyed() {
     

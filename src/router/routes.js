@@ -26,37 +26,37 @@ export default [{
     component: home,
     children: [{
         path: '/home',
-        redirect: '/home/userList',
+        redirect: '/userList',
     }, {
-        path: '/home/userList',
+        path: '/userList',
         name: 'userList',
         meta: {
             title: '用户列表'
         },
         component: userList
     }, {
-        path: '/home/roleList',
+        path: '/roleList',
         name: 'roleList',
         meta: {
             title: '角色分配'
         },
         component: roleList
     }, {
-        path: '/home/productList',
+        path: '/productList',
         name: 'productList',
         meta: {
             title: '商品列表'
         },
         component: productList
     }, {
-        path: '/home/limlist',
+        path: '/limlist',
         name: 'limlist',
         meta: {
             title: '商品权限'
         },
         component: limlist
     }, {
-        path: '/home/statement',
+        path: '/statement',
         name: 'statement',
         meta: {
             title: '数据报表'
