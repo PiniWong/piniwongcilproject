@@ -6,6 +6,8 @@ import router from './router'
 import Vue2OrgTree from 'vue2-org-tree'
 import 'vue2-org-tree/dist/style.css'
 
+import vcolorpicker from 'vcolorpicker'
+Vue.use(vcolorpicker)
 
 // import axios from 'axios'
 

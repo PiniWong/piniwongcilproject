@@ -1,11 +1,15 @@
 
+import main from '@/layout/main'
+
 const login = () => import('@/view/login/login');
-const home = () => import('@/view/home/home')
-const productList = () => import('@/view/home/chil/productList')
-const roleList = () => import('@/view/home/chil/role')
-const userList = () => import('@/view/home/chil/userList')
-const statement = () => import('@/view/home/chil/statement')
-const limlist = () => import('@/view/home/chil/limlist')
+// const main = () => import('@/view/home/home')
+const productList = () => import('@/view/productList/productList')
+const roleList = () => import('@/view/role/role')
+const payList = () => import('@/view/pay/payList')
+const beuse = () => import('@/view/beuse/beuse')
+const home = () => import('@/view/pay/payList')
+const statement = () => import('@/view/statement/statement')
+const limlist = () => import('@/view/limlist/limlist')
 
 export default [{
     path: '/',
@@ -19,21 +23,35 @@ export default [{
     component: login
 },
 {
-    path: '/home',
+    path: '/',
     meta: {
         title: "首页"
     },
-    component: home,
-    children: [{
+    component: main,
+    children: [ {
+        path: '',
+        redirect: '/payList',
+      },{
         path: '/home',
-        redirect: '/userList',
-    }, {
-        path: '/userList',
-        name: 'userList',
+        name: 'home',
         meta: {
-            title: '用户列表'
+            title: "首页"
         },
-        component: userList
+        component: home,
+      },{
+        path: '/payList',
+        name: 'payList',
+        meta: {
+            title: '支付列表'
+        },
+        component: payList
+    },{
+        path: '/beuse',
+        name: 'beuse',
+        meta: {
+            title: '支出类型'
+        },
+        component: beuse
     }, {
         path: '/roleList',
         name: 'roleList',

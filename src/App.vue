@@ -1,14 +1,14 @@
 <template>
-  <div>
-    <!-- <button @click="clickButton('equi')">点击equi</button>
-    <button @click="clickButton('bbb')">点击bbb</button> -->
-    <keep-alive>
-      <router-view></router-view>
-    </keep-alive>
-  </div>
+  
+  <a-config-provider :locale="zhCN">
+    <div id="app" class="app-container">
+      <router-view />
+    </div>
+  </a-config-provider>
 </template>
 
 <script>
+import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN'
 export default {
   name: "app",
   data() {
@@ -30,23 +30,24 @@ export default {
         pageSize: 20,
         total: 40,
       },
+      zhCN
     };
   },
   methods: {
-    resetParams(type, callback) {
-      let changepPage = {
-        pageNum: 1,
-        pageSize: 10,
-        total: 0,
-      };
-      Object.assign(this[type + "Query"], changepPage);
-      console.log(this[type + "Query"])
-      callback && callback();
-    },
-    clickButton(type) {
-      // console.log(type);
-      this.resetParams(type)
-    },
+    // resetParams(type, callback) {
+    //   let changepPage = {
+    //     pageNum: 1,
+    //     pageSize: 10,
+    //     total: 0,
+    //   };
+    //   Object.assign(this[type + "Query"], changepPage);
+    //   console.log(this[type + "Query"])
+    //   callback && callback();
+    // },
+    // clickButton(type) {
+    //   // console.log(type);
+    //   this.resetParams(type)
+    // },
   },
 };
 </script>
