@@ -552,8 +552,8 @@ export default {
         }
       })
     },
-    getpayTypeList(){
-      axios.post('/admin/paytypeList').then((res)=>{
+    getpayTypeList(s){
+      axios.post('/admin/paytypeList',{state:s}).then((res)=>{
         console.log(res)
         const object = res.data
       if(object.state.success){
@@ -615,6 +615,7 @@ export default {
     this.getBeuseList()
     this.getPayList()
     this.getpayTypeList()
+    this.getpayTypeList(s)
     axios.post('/admin/monthPayList',{
       name:'东东',
       date:'2021-12-10',

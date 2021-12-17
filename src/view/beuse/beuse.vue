@@ -8,14 +8,19 @@
                 <a-divider>暂未使用的支出类型</a-divider>
                 <div class="usedBox">
                     <template v-for="(item,index) in beuseStateList" >
-                    <a-tag 
-                    closable 
-                    @click="clickTag1(index,'not')"
-                    @close="usedClose1(index,'not',item.beuse)"
-                      :class="[ tagarrClass1[index]? 'tagChange': '','tag']" style="margin-right:0px"    :color="item.color" :key="index"  :value='item.beuse'>
-                        <span>{{item.beType}}</span>
-                        <!-- <a-icon class="usedbox-icon" @click.stop="usedClose1(index,'not',item.beuse)" type="close" /> -->
-                    </a-tag>
+                    <div :key="index">
+
+                        
+                     <a-tag 
+                        closable 
+                        @click="clickTag1(index,'not')"
+                        @close="usedClose1(index,'not',item.beuse)"
+                        :class="[ tagarrClass1[index]? 'tagChange': '','tag']" style="margin-right:0px"    :color="item.color"   :value='item.beuse'>
+                            <span>{{item.beType}}</span>
+                     </a-tag>
+                    <a-icon class="usedbox-icon" @click="edit('not',item)" type="setting" />
+                        
+                    </div>
                     
                     </template>
                 </div>
@@ -49,7 +54,10 @@
             <div class="leftBox" >
                 <a-divider>正在使用的支出类型</a-divider>
                 <div class="usedBox">
+
                     <template v-for="(item,index) in beuseList" >
+                    <div :key="index">
+
                         <a-tag 
                         closable 
                         @click="clickTag1(index,'used')"
@@ -57,6 +65,10 @@
                         :class="[ tagarrClass2[index]? 'tagChange': '','tag']" style="margin-right:0px"    :color="item.color" :key="index"  :value='item.beuse'>
                             <span>{{item.beType}}</span>
                         </a-tag>
+                    <a-icon class="usedbox-icon" @click="edit('not',item)" type="setting" />
+
+                    </div>
+
                     </template>
                     </div>
                 <div class="add_tag">
@@ -132,6 +144,7 @@ export default {
       addTagform: this.$form.createForm(this, { name: "addTag" }),
       tagRules,
       addtagLoading:false,
+      editId:null,
 
     };
   },
@@ -264,6 +277,16 @@ export default {
         // console.log(this.deleteUseList)
         // console.log(this.deleteNotList)
     },
+    edit(tag,item){
+        this.addTagModel=true
+        this.$nextTick(()=>{
+                this.addTagform.setFieldsValue({
+                    title:item.beType
+                })
+                this.color=item.color
+                this.editId=item.beuse
+        })
+    },
     useNot(){
         if(this.tagarrIndex2){
             let Carr = []
@@ -373,7 +396,8 @@ export default {
                 this.addtagLoading=true
                 const params ={
                     beType:values.title,
-                    color:this.color
+                    color:this.color,
+                    beuse:this.editId
                 }
                 axios.post('/admin/addBeuse',params).then((res)=>{
                     const object = res.data.state
@@ -463,9 +487,12 @@ export default {
         }
         .usedbox-icon{
             margin-left: 28px;
-            position: relative;
-            top: -2px;
+            position: absolute;
             display: flex;
+            margin-left: 76px;
+            margin-top: -18px;
+            font-size: 13px;
+            color: white;
             
         }
 
