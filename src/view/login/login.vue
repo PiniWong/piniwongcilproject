@@ -83,7 +83,7 @@ export default {
                 const adminName = data.userinfo.username
                 window.sessionStorage.setItem('adminName',adminName)
                 console.log(token)
-                this.$router.replace({name:'home'})
+                this.$router.replace({name:'payList'})
             }else{
               this.$message.warning('登陆失败，无该用户信息请前往注册~',3)
               this.loading = false;

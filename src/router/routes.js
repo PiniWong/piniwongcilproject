@@ -4,10 +4,10 @@ import main from '@/layout/main'
 const login = () => import('@/view/login/login');
 // const main = () => import('@/view/home/home')
 const productList = () => import('@/view/productList/productList')
-const roleList = () => import('@/view/role/role')
+const userList = () => import('@/view/user/user')
 const payList = () => import('@/view/pay/payList')
 const beuse = () => import('@/view/beuse/beuse')
-const home = () => import('@/view/pay/payList')
+// const home = () => import('@/view/pay/payList')
 const statement = () => import('@/view/statement/statement')
 const limlist = () => import('@/view/limlist/limlist')
 
@@ -31,14 +31,8 @@ export default [{
     children: [ {
         path: '',
         redirect: '/payList',
-      },{
-        path: '/home',
-        name: 'home',
-        meta: {
-            title: "首页"
-        },
-        component: home,
-      },{
+      },
+      {
         path: '/payList',
         name: 'payList',
         meta: {
@@ -53,12 +47,12 @@ export default [{
         },
         component: beuse
     }, {
-        path: '/roleList',
-        name: 'roleList',
+        path: '/userList',
+        name: 'userList',
         meta: {
-            title: '角色分配'
+            title: '用户列表'
         },
-        component: roleList
+        component: userList
     }, {
         path: '/productList',
         name: 'productList',

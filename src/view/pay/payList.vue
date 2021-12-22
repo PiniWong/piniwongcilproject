@@ -169,13 +169,13 @@
     </a-modal>
     <a-modal :zIndex='666'  destroyOnClose   :title="'选择支付类型'" ok-text='确认' cancel-text='取消' :visible="showBeuse" @ok="addBeuseOk" @cancel="showBeuse = false" >
       <div class="model">
-        <template  v-for="(item,index) in beuseList">
-          <a-tag class="tag" @close="()=>{selectedTag1=null}"  @click="clickBeuseTag(item.beuse)" :color="item.color" :key="index"  :value='item.beuse'>
+        <template  v-for="(item,index) in showUesdList">
+          <a-tag :class="[ clickTag==item.beuse ? 'tagChange': '','tag']"  @close="()=>{selectedTag1=null}"  @click="clickBeuseTag(item.beuse)" :color="item.color" :key="index"  :value='item.beuse'>
             <span>{{item.beType}}</span>
-            <span class="icon">
-              <a-icon type="check-circle"  v-if="clickTag==item.beuse" />
+            <!-- <span class="icon"> -->
+              <!-- <a-icon type="check-circle"  v-if="clickTag==item.beuse" /> -->
               <!-- <a-icon type="close-circle" v-else /> -->
-            </span>
+            <!-- </span> -->
           </a-tag>
 
         </template>
@@ -183,13 +183,7 @@
       
       
     </a-modal>
-    <a-modal  destroyOnClose  :title="'添加人员'" ok-text='确认' cancel-text='取消' :visible="showUserAdd" @ok="addUserOk" @cancel="showUserAdd = false" :width='400' >
-      <a-form :form="addUserForm"  :label-col="{ span: 7 }" >
-                    <a-form-item label="人员姓名">
-                      <a-input class="input" placeholder="请填写" v-decorator="addUserRules.name" />
-                    </a-form-item>
-      </a-form>
-    </a-modal>
+    
     <a-modal  destroyOnClose  :title="'添加支付方式类型'" ok-text='确认' cancel-text='取消' :visible="showPayType" @ok="addPayTypeOk" @cancel="showPayType = false" :width='400' >
       <a-form :form="addPayTypeForm"  :label-col="{ span: 7 }" >
                     <a-form-item label="支付方式">
@@ -199,7 +193,7 @@
     </a-modal>
     
 
-              <colorPicker v-model="color" />
+              <!-- <colorPicker v-model="color" /> -->
 
   </div>
 </template>
@@ -276,10 +270,10 @@ export default {
       // 删除
       deleteMsg: "",
       // 权限
-      visiblePop1: false,
-      authMsg: "",
-      authTagDel: [],
-      showAuthadd: false,
+      // visiblePop1: false,
+      // authMsg: "",
+      // authTagDel: [],
+      // showAuthadd: false,
 
       //编辑
       visibleAuth: false,
@@ -312,9 +306,7 @@ export default {
       
 
       //新增人员
-      showUserAdd:false,
-      addUserForm:this.$form.createForm(this, { name: "addUserForm" }),
-      addUserRules,
+      
 
       //新增方式类型
       showPayType:false,
@@ -324,6 +316,7 @@ export default {
 
       //新增类型类型
       beuseList:null,
+      showUesdList:[],
       showBeuse:false,
       showBeuseKey:null,
       clickTag:null,
@@ -335,6 +328,13 @@ export default {
       
 
     };
+  },
+  watch:{
+    showBeuse(newVal){
+      if(newVal){
+        this.getBeuseList(1)
+      }
+    }
   },
 
   
@@ -463,12 +463,12 @@ export default {
       
 
     },
-    editOk() {
-      console.log("修改数据");
-    },
-    editCancel() {
-      this.visiblePop1 = false;
-    },
+    // editOk() {
+    //   console.log("修改数据");
+    // },
+    // editCancel() {
+    //   this.visiblePop1 = false;
+    // },
 
     //日期
     changeDate(value){
@@ -505,28 +505,13 @@ export default {
     },
     //新增人物
     addUser(){
-      this.showUserAdd=true
-    },
-    addUserOk(){
-      this.addUserForm.validateFields((err,values)=>{
-        if(!err){
-          const params = {
-            ...values,
-          }
-          
-          axios.post('/admin/addUser',params,{useJSONContentType:true}).then((res)=>{
-            console.log(res)
-            if(res.data.state.success){
-              this.$message.success('添加/修改成功')
-              this.showUserAdd = false;
-               this.getPayList()
-            }else{
-              this.$message.success('添加/修改失败')
-            }
-          })
-        }
+      // this.showUserAdd=true
+      this.showpayAdd = false;
+      this.$router.push({
+        name:'userList'
       })
     },
+   
 
     //获取支付方式列表
     addPayType(){
@@ -553,24 +538,28 @@ export default {
       })
     },
     getpayTypeList(s){
-      axios.post('/admin/paytypeList',{state:s}).then((res)=>{
+      axios.post('/admin/paytypeList').then((res)=>{
         console.log(res)
         const object = res.data
       if(object.state.success){
         const data = object.list
-        this.paytypeList = data
+          this.paytypeList = data
       }
 
       })
     },
 
     //获取类型方式列表
-    getBeuseList(){
-      axios.post('/admin/beuseList').then((res)=>{
+    getBeuseList(s){
+      axios.post('/admin/beuseList',{state:s}).then((res)=>{
         const object = res.data
       if(object.state.success){
         const data = object.list
-        this.beuseList = data
+        if(s){
+          this.showUesdList = data
+        }else{
+          this.beuseList = data
+        }
       }
 
       })
@@ -615,7 +604,6 @@ export default {
     this.getBeuseList()
     this.getPayList()
     this.getpayTypeList()
-    this.getpayTypeList(s)
     axios.post('/admin/monthPayList',{
       name:'东东',
       date:'2021-12-10',
@@ -682,10 +670,13 @@ export default {
      .icon{
       font-size:18px;
       color: rgb(98, 179, 63);
-      margin-left: 55px;
-      
     }
+    
    }
+   .tagChange{
+            box-shadow: 0px 4px  rgb(66, 201, 255);
+            border: 4px solid rgb(255, 255, 255);
+        }
    
  }
 </style>

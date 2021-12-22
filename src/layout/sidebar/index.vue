@@ -10,10 +10,10 @@
           theme="dark"
           @click="changeNav"
           @openChange="onOpenChange"
-          :open-keys="openKeys" 
-          v-model="selectOpenKeys"          
-          :default-open-keys="[1]"
+          :open-keys.sync="openKeys" 
+          :selectedKeys="selectedKeys"          
           :default-selected-keys="['payList']"
+          @select='selectedCallback'
         >
           <a-sub-menu    v-for="(item, index) in navBar" :key="index+1">
             <span slot="title">
@@ -28,13 +28,13 @@
     </a-layout-sider>
 </template>
 <script>
+import {mapState} from 'vuex'
 export default {
   name: "home",
   data() {
     return {
       adminNmae:null,
       
-      collapsed: false,
       navBar: [
         {
           name: "支付管理",
@@ -42,21 +42,21 @@ export default {
           chil: [
             {
               cname: "支付记录列表",
-              path: "payList",
+              path: "/payList",
             },
             {
               cname: "支出类型配置",
-              path: "beuse",
+              path: "/beuse",
             },
           ],
         },
         {
-          name: "角色分配",
+          name: "用户管理",
           type: "team",
           chil: [
             {
-              cname: "角色列表",
-              path: "roleList",
+              cname: "用户列表",
+              path: "/userList",
             },
           ],
         },
@@ -66,11 +66,11 @@ export default {
           chil: [
             {
               cname: "商品权限",
-              path: "limList",
+              path: "/limList",
             },
             {
               cname: "商品列表",
-              path: "productList",
+              path: "/productList",
             },
           ],
         },
@@ -80,24 +80,29 @@ export default {
           chil: [
             {
               cname: "数据可视",
-              path: "statement",
+              path: "/statement",
             },
           ],
         },
       ],
-      rootSubmenuKeys: [1, 2, 3,4],
-      openKeys: [1],
-      selectOpenKeys:['payList'],
+      rootSubmenuKeys: [1,2,3,4],
+      openKeys: [1,2,3,4],
+      // selectOpenKeys:['payList'],
 
     };
   },
   watch: {
    
   },
+  computed:{
+    ...mapState({
+      selectedKeys:(state) => state.selectedKeys,
+      collapsed:(state)=> state.collapsed,
+    })
+  },
    methods: {
     onOpenChange(openKeys) {
       const latestOpenKey = openKeys.find(key => this.openKeys.indexOf(key) === -1);
-      // console.log(latestOpenKey)
       if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
         this.openKeys = openKeys;
       } else {
@@ -107,20 +112,25 @@ export default {
     changeNav(e) {
       // console.log(e);
       const path = e.key;
-      // console.log(path);
+      console.log(path);
       // this.$router.replace(path);
-      console.log(path)
       this.$router.push({
         path: path
       })
       // this.selectedKey = [e.key];
     },
+    selectedCallback({ item, key, selectedKeys }){
+      console.log(item)
+      console.log(key)
+      console.log(selectedKeys)
+    }
   },
 
   beforeCreate() {
 
   },
   created() {
+    
   },
   destroyed() {
     
@@ -130,6 +140,13 @@ export default {
 </script>
 <style lang='less' scoped>
 .side {
+   width: 200px;
+  height: 100vh;
+  box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+  overflow-y: auto;
+  position: fixed;
+  left: 0;
+  z-index: 100;
   .logo {
     justify-content: center;
     display: flex;

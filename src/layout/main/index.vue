@@ -1,14 +1,13 @@
 <template>
-  <a-layout id="components-layout-demo-custom-trigger">
+  <a-layout class="site-layout" :class="{ collapsed: collapsed }" >
     <Sidebar />
     <a-layout>
       <Header />
       <a-layout class="layout-main">
         <a-layout-content
             :style="{
-            margin: '24px 16px 0',
+            margin: '16px 16px',
             overflow: 'initial',
-            height: '100vh',
             padding: '24px',
             background: '#fff',
             minHeight: '280px',
@@ -29,6 +28,8 @@
 import Header from '@/layout/header'
 import Sidebar from '@/layout/sidebar'
 import Footer from '@/layout/footer'
+import { mapState } from 'vuex'
+
 export default {
   name: "home",
   components: {
@@ -44,6 +45,11 @@ export default {
   },
   
   methods: {
+  },
+  computed:{
+     ...mapState({
+      collapsed: (state) => state.collapsed,
+    }),
   },
 
   mounted() {
@@ -66,6 +72,12 @@ export default {
   padding: 0 24px;
   cursor: pointer;
   transition: color 0.3s;
+}
+.site-layout{
+  margin-left: 200px;
+}
+.collapsed {
+  margin-left: 84px;
 }
 .trigger {
   float: left;

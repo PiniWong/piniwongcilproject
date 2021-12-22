@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import routes from './routes'
+import store  from '@/store'
 
 // 解决ElementUI导航栏中的vue-router在3.0版本以上重复点菜单报错问题
 // const originalPush = Router.prototype.push
@@ -19,6 +20,10 @@ router.beforeEach((to,from,next)=>{
     const token = sessionStorage.getItem('token');
     if(!token) return next('/login')
     next()
+})
+
+router.afterEach(r =>{
+    store.commit('selectedKeys',[r.path])
 })
 
 export default router

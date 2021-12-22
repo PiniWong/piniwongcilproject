@@ -82,8 +82,6 @@ export default {
             )
             if(!option.useJSONContentType){
                 data=qs.stringify(data)
-            }else{
-              console.log('666')
             }
             axios({
                 method:'POST',

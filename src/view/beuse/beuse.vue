@@ -145,6 +145,7 @@ export default {
       tagRules,
       addtagLoading:false,
       editId:null,
+      beuse:null,
 
     };
   },
@@ -389,6 +390,7 @@ export default {
     },
     addTag(){
         this.addTagModel = true
+        this.editId = null
     },
     addTagOK(){
         this.addTagform.validateFields((err,values)=>{
