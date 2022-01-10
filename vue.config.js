@@ -5,9 +5,6 @@ function resolve(dir) {
 }
 
 module.exports = {
-  devServer:{
-    // before:require('./mock/index.js')
-},
   configureWebpack: {
     // resolve: {
     //   // alias: {
@@ -18,6 +15,7 @@ module.exports = {
     //   // }
     // }
   },
+  //配置别名
   chainWebpack: config => {
     config.resolve.alias.set('@', resolve('src'))
   },
@@ -27,6 +25,7 @@ module.exports = {
     host: 'localhost',
     open: true,
     https: false,
+    //node接口地址
     proxy:{
       '/api':{
         target:'http://127.0.0.1:3000',

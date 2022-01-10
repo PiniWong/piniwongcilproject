@@ -9,7 +9,7 @@
         <div class="titleLink">
           <a-breadcrumb>
             <a-breadcrumb-item href=""  title="回首页">
-              <router-link to="/payList" title="回首页">
+              <router-link to="/home" title="回首页">
                 <a-icon type="home" />
               </router-link>
             </a-breadcrumb-item>
@@ -17,7 +17,7 @@
                 <a-breadcrumb-item :key="i" >
                   <span >
                     <a-dropdown :trigger="['contextmenu']">
-                      <router-link :to="el.path"  title="回首页">
+                      <router-link :to="el.path" >
                         {{el.title}}
                       </router-link>
                       <a-menu slot="overlay" v-if="titleArr.length != 1">
@@ -68,8 +68,8 @@ export default {
       console.log(to)
       this.title = to.meta.title
       const title = to.meta.title
-      const path = to.path
-      // console.log(this.titleArr)
+      const path = to.fullPath
+      console.log(path)
       let flag = true
       this.titleArr.forEach((el,index) => {
           if(el.title==title){
@@ -150,7 +150,7 @@ export default {
   },
   created() {
     const title = this.$route.meta.title
-    const path = this.$route.path
+    const path = this.$route.fullPath
     this.titleArr.push({
           title:title,
           path:path

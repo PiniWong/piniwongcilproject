@@ -1,20 +1,6 @@
 // 工具集合
 
 
-let loginBoxShow = false
-const authLogin = url => {
-  if (!loginBoxShow) {
-    loginBoxShow = true
-    const href = encodeURI(window.location.href)
-    const link = `${url}?redirectUrl=${href}`
-    window.location.href = encodeURI(link)
-    // test
-    // window.location.href = encodeURI('http://local.udb.baohuaok.com:8090/auth/login?redirectUrl=http%3A%2F%2Flocal.loan.baohuaok.com%3A9095%2Ftodo%2Findex')
-  }
-  setTimeout(() => {
-    loginBoxShow = false
-  }, 1000)
-}
 // 数组分组
 const groupBy = (array, f, returnObject = true) => {
   const groups = {}

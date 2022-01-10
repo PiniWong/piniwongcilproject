@@ -37,50 +37,16 @@ export default {
       
       navBar: [
         {
-          name: "支付管理",
-          type: "user",
-          chil: [
-            {
-              cname: "支付记录列表",
-              path: "/payList",
-            },
-            {
-              cname: "支出类型配置",
-              path: "/beuse",
-            },
-          ],
-        },
-        {
-          name: "用户管理",
+          name: "主页",
           type: "team",
           chil: [
             {
-              cname: "用户列表",
-              path: "/userList",
-            },
-          ],
-        },
-        {
-          name: "商品",
-          type: "appstore-o",
-          chil: [
-            {
-              cname: "商品权限",
-              path: "/limList",
+              cname: "主页",
+              path: "/home",
             },
             {
-              cname: "商品列表",
-              path: "/productList",
-            },
-          ],
-        },
-        {
-          name: "数据报表",
-          type: "bar-chart",
-          chil: [
-            {
-              cname: "数据可视",
-              path: "/statement",
+              cname: "支付列表",
+              path: "/pay",
             },
           ],
         },

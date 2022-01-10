@@ -15,12 +15,14 @@ const router =new Router({
     mode:'history'
 })
 
-router.beforeEach((to,from,next)=>{
-    if(to.path == '/login') return next()
-    const token = sessionStorage.getItem('token');
-    if(!token) return next('/login')
-    next()
-})
+// router.beforeEach((to,from,next)=>{
+//     if(to.path == '/login') return next()
+//     const token = sessionStorage.getItem('token');
+//     console.log(to.path)
+
+//     if(!token) return next('/login')
+//     next()
+// })
 
 router.afterEach(r =>{
     store.commit('selectedKeys',[r.path])

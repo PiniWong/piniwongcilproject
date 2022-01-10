@@ -3,6 +3,7 @@ import qs from 'qs'
 import router from '../router';
 import { message } from 'ant-design-vue'
 
+
 const CancelToken = axios.CancelToken
 
 //设置基础的url
@@ -98,5 +99,29 @@ export default {
                 resolve(checkCode(res, option))
             })
         })
+    },
+    get(url,params,config){
+      return new Promise((resolve,reject)=>{
+        const option = Object.assign({
+          userJSONContentType:false,
+          warn:true
+        },
+        config
+        )
+        axios({
+          method:'get',
+          url,
+          cancelToken:new CancelToken(c=>{
+            cancel = c
+          }),
+          params,
+          timeout:10000,
+          headers:{
+            "X-Request-With": 'XMLHttpRequest'
+          }
+        }).then(res=>{
+          resolve(checkCode(res,option))
+        })
+      })
     }
 }
